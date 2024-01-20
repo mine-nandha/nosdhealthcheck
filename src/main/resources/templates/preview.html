@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>NOSD Check List</title>
+    <th:replace th:replace="~{fragments/styles}"></th:replace>
+</head>
+<body>
+<th:replace th:replace="~{fragments/navbar :: addName(name=${name})}"></th:replace>
+<div th:if="${message}" class="alert alert-success" role="alert">
+    <span th:text="${message}"></span>
+</div>
+<form id="previewForm" method="post"
+      enctype="application/x-www-form-urlencoded" accept-charset="UTF-8">
+    <div id="htmlContent">
+        <div style="width: 100%; padding-left: 5vw">
+            <img
+                    src="data:image/png;base64,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"
+                    width="168" height="98" alt="virginmedia logo">
+        </div>
+        <div
+                style="font-weight: bold; font-size: x-large; display: flex; justify-content: space-around;">
+            <span id="date"></span> <span>DTV Health Checks</span> <span
+                style="color: red;" id="issues"></span>
+        </div>
+        <div style="overflow-y: hidden; overflow-x: scroll;">
+            <table
+                    style="width: 100%; margin: 0px; padding: 0px; user-select: text; -webkit-user-drag: none; -webkit-tap-highlight-color: transparent; table-layout: fixed; overflow: visible; border-collapse: collapse; empty-cells: show; position: relative; text-align: center; background: transparent; border-spacing: 0px;">
+                <thead style="height: 48pt;">
+                <tr>
+                    <th th:each="col,colIndex : ${thead}"
+                        style="background-color: rgb(68, 114, 196); color: rgb(255, 255, 255); margin: 0px; padding: 0px; border: 1px solid rgb(0, 0, 0); font-family: 'Aptos Narrow', 'Aptos Narrow_EmbeddedFont', 'Aptos Narrow_MSFontService', sans-serif;"
+                        th:styleappend="${colIndex.index == 0 || colIndex.index == #lists.size(thead) - 1 ? 'width : 150px' : 'width : 65px'}">
+                        <span th:text="${col}"></span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row, rowIndex : ${tbody}">
+                    <td th:each="col, colIndex : ${row}"
+                        style="margin: 0px; padding: 0px; border: 1px solid rgb(0, 0, 0); font-family: 'Aptos Narrow', 'Aptos Narrow_EmbeddedFont', 'Aptos Narrow_MSFontService', sans-serif;"
+                        th:styleappend="(${colIndex.index == 0 ? 'background-color: rgb(68, 114, 196);' : 'background-color: rgb(217, 226, 243);'})
+						+ (${colIndex.index == 0 ? 'color: rgb(255, 255, 255);' : ''})">
+								<span th:if="${colIndex.index != #lists.size(row) - 1}"
+                                      th:text="${col}"></span> <textarea rows="6" th:utext="${col}"
+                                                                         disabled="disabled"
+                                                                         th:if="${colIndex.index == #lists.size(row) - 1}"
+                                                                         style="overflow-x: hidden; overflow-y: scroll; width: 100%"></textarea>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="signatureContent">
+        <br>
+        <p style='font-size: 12pt; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: white; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: left; margin: 0px; font-family: "Times New Roman", serif; color: rgb(66, 66, 66);'>
+				<span style="border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: 10pt; line-height: inherit; font-family: Tahoma, sans-serif; font-optical-sizing: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; margin: 0px; padding: 0px; vertical-align: baseline; color: black;">
+					Submitted by,</span>
+        </p>
+        <p style='font-size: 12pt; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: white; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: left; margin: 0px; font-family: "Times New Roman", serif; color: rgb(66, 66, 66);'>
+				<span
+                        style="border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: 10pt; line-height: inherit; font-family: Tahoma, sans-serif; font-optical-sizing: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; margin: 0px; padding: 0px; vertical-align: baseline; color: black;"><span
+                        id="name" th:text="${name}"></span>&nbsp;|&nbsp;</span><span
+                style="border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: 10pt; line-height: inherit; font-family: Tahoma, sans-serif; font-optical-sizing: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; margin: 0px; padding: 0px; vertical-align: baseline; color: rgb(36, 36, 36);">Network
+					Support Technician</span>
+        </p>
+        <p
+                style='font-size: 12pt; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: white; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: left; margin: 0px; font-family: "Times New Roman", serif; color: rgb(66, 66, 66);'>
+				<span
+                        style="border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: 10pt; line-height: inherit; font-family: Tahoma, sans-serif; font-optical-sizing: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; margin: 0px; padding: 0px; vertical-align: baseline; color: red;">Virgin
+					Media Ireland</span>
+        </p>
+        <p
+                style='font-size: 12pt; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: white; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: left; margin: 0px; font-family: "Times New Roman", serif; color: rgb(66, 66, 66);'>
+				<span
+                        style="border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: 10pt; line-height: inherit; font-family: Tahoma, sans-serif; font-optical-sizing: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; margin: 0px; padding: 0px; vertical-align: baseline; color: rgb(4, 74, 145);"><a
+                        href="mailto:NetworkOpsSupportDesk@virginmedia.ie"
+                        class="ContentPasted0"
+                        style="border: 0px; font: inherit; margin: 0px; padding: 0px; vertical-align: baseline; color: rgb(4, 74, 145);">NetworkOpsSupportDesk@virginmedia.ie</a></span><span
+                style="border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: 10pt; line-height: inherit; font-family: Tahoma, sans-serif; font-optical-sizing: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; margin: 0px; padding: 0px; vertical-align: baseline; color: rgb(47, 85, 151);">&nbsp;|&nbsp;<a
+                href="http://www.virginmedia.ie/" target="_blank"
+                class="ContentPasted0" rel="noopener noreferrer"
+                style="border: 0px; font: inherit; margin: 0px; padding: 0px; vertical-align: baseline;">www.virginmedia.ie</a></span>
+        </p>
+        <p
+                style='font-size: 12pt; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: white; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: left; margin: 0px; font-family: "Times New Roman", serif; color: rgb(66, 66, 66);'>
+				<span
+                        style="border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: 11pt; line-height: inherit; font-family: Calibri, sans-serif; font-optical-sizing: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; margin: 0px; padding: 0px; vertical-align: baseline; color: rgb(36, 36, 36);"><strong><img
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAbCAYAAAAH+20UAAAAAXNSR0IArs4c6QAABS5JREFUWEe9mAmoVVUUhr9VVtA8R5Q20KQ2Ko00aRNpZWIDhWlhgzQYzaXYCFmYzWRlpo0mDdggkUkzipVBVGRFFGkFViqVVmbt+Nz7Po6v++69UrrhceGdffb+91r//6+1T9DBSNAbOA7YHdgMWBNYDHwLfABMi/y7Wke03y3B9sD9BdyTwIyA752XYD1gF6AX+UBrAOMDnl1dqFcAnKA78DQwOmBCMxAJjgAuBf72N+CLZu/81+dtgBNsCrwBXBXw8sosnGAIcAlwR8D4lXl3ZedWAT8GfBJwSx2adAI2CFjYgPNS6XFgdsDFKwuk1fnLASc4ALgt4OB6L6ZMk+0C9mu0cALXewLoFHBKqyBq8xJsDBwOdCOv9THwUsBftTk1wIprauTNVhgJtgXmAkMCHm4FRIJ7gc4B/VqcrwtdA+wDfA18nuPIHsAOwNUB77hWJNgEeB44OuD3OoCvBw6L7AwtjwT3AFs1i3SCk4HhRhK4O+CH6iYpR/wB4DRtVMDHAgMCzu6ADh8CIwNeqHOYtYDz3QhYHzgJmBywpFDtUWBRwLAO1jYYev1ZAR810MdRZiCgt4BNxU8BD9YBZIomA90D/qzzXErtSrY3+e9f76q9JZgOTIlMk7aRYBTQEzihXmbr7KXXjxGw4X4kYEadSSOBrgGn13nWhVxk3PSYIra+xZetiEs8ZKHcW2Yi4O0S+QtLNjycHt50JDgT6CLgF8tiCkumjygqvyHBVPImC2oZSLCzfDLq5DQqmB0VBjC2iGVdoG/Aj2VN3UV/NmN7AROBQwIWdUAVK6jcnVvLVilqIwRsP3BowK9lcYHPKVEz6vJSxRpJU75Nea569WVFMh/Yt/QdrwCTAr5sR4GLBEm2LjUxK2XdeDjf/6q4wizg1LLPc2W+ZmAxmyZgva5HwNJyCtP3HnCtVQ+4FdgQuJPMc0HLJ9V9Hdlvu5ZoW+mWH7yDyCnGZwIGpWxXvu+hjagH9vDO8QBmbm3gO4sWcAHwbi3CpmdxgjHAz8W4PfFvWpNKBw4CTizVrHPZxGg4RrWPaB3On0d2JCMqfT4tFPGAVlL93vbAjOsK7i9Yi8gfxXpfFbD+NzRgXoL9y0LybbcSXf13NtCn0GOj8n+poh1ZBRuOlLlr2e4B7A2MAw40SM3erT1POYsjBWyaJwTMrDy0vTxXbgODdJFy8mWWcDcDvonM72ZgpZM0s5t7rejEDq9PwJHN3q9gGmzVE7BVZn7AQ5WHevPNRf0LVXOCrS3fEr+o/KbIPG4GWLFMj0y3tpHg9uLh/QIMRLN1zORdAjbV/QPOqQA2cqZwi4BfUhaEQpOrY1NO7YiAAY12STkIywKG1ptXioeUGxzwWUdrlfJsVewlYIk+RaJHJrceJqBxAT1Lk26vMTDyPJ9LiSsD+jfYZDSwU6M5Za2BwGUlIPcFLGiXCcVu0+WhZtW6tUmqMOCpssg6xQdV7puKrXoNSpnbCqdbtfWrZKiW7uNbqWQpO5HU3JN8a9FB9H6LjOIfHvC669cA662mW2Ov8swKZcdlNaz+X6tRrGZF66s+s4opNA/ZUtmtHHTLcl/UEWr9sIFcWptTvXHYE78fWQxNR8pNeptYUq6A3lrmRO7gVsmoAt683OmG1eyn1R0TnAFcbi8R+ca9ykb7W7OmLp9vjPzbcBQu66l+s7gicg+ySke97xJ2Y3ZddlrSZGbtFpBAMfpdwk7K7xLW+omtVLv/6xT/AlwRgD2uHq3AbERsUCyl80rVsxhYslfr+AckBndBRy5j7QAAAABJRU5ErkJggg=="
+                        width="44" height="27"
+                        style="border: 0px; font: inherit; padding: 0px; color: inherit; width: 32.99pt; height: 20.24pt; min-width: auto; min-height: auto;"></strong></span>
+        </p>
+    </div>
+    <input
+            class="btn btn-warning btn-lg px-4 rounded-pill sticky-bottom float-end"
+            value="Send Checklist" type="submit"
+            style="bottom: 10px; width: 300px;" onclick="captureAndSubmit()"/>
+</form>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+
+    function applyBgColor(td) {
+        if (td.innerText === 'No') {
+            td.style.backgroundColor = 'rgb(25,135,84)';
+        } else if (td.innerText === 'Yes') {
+            td.style.backgroundColor = 'rgb(220,53,69)';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(()=>{document.getElementById("issues").textContent = 'No of Issues : ' + document.querySelectorAll('td[style*="background-color: rgb(220, 53, 69)"]').length},100);
+        document.getElementById("date").textContent = new Date().toLocaleDateString();
+        var noDropdownSelects = document.querySelectorAll('td');
+        noDropdownSelects.forEach(function(td) {
+            applyBgColor(td);
+        });
+    });
+
+    function captureAndSubmit() {
+        var htmlContent = encodeURIComponent(document.querySelector('#htmlContent').outerHTML);
+        var signatureContent = encodeURIComponent(document.querySelector('#signatureContent').outerHTML);
+        var form = document.getElementById('previewForm');
+        var input = document.createElement('input');
+        var signature = document.createElement('input');
+        var issues = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'htmlContent';
+        issues.type = 'hidden';
+        issues.name = 'issues';
+        signature.type = 'hidden';
+        signature.name = 'signature';
+        input.value = htmlContent;
+        issues.value = document.querySelectorAll('td[style*="background-color: rgb(220, 53, 69)"]').length;
+        signature.value = signatureContent;
+        form.appendChild(input);
+        form.appendChild(issues);
+        form.appendChild(signature);
+        form.submit();
+    }
+</script>
+<th:replace th:replace="~{fragments/scripts}"></th:replace>
+</body>
+</html>

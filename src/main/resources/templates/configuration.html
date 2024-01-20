@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>NOSD Health Check</title>
+    <th:replace th:replace="~{fragments/styles}"></th:replace>
+</head>
+<body>
+<th:replace th:replace="~{fragments/navbar :: addName(name=${name})}"></th:replace>
+<div class="container my-4">
+    <div class="p-5 text-center bg-body-tertiary rounded-3">
+        <form action="#" class="form-group" th:action="@{/configuration}" th:object="${config}"
+              method="post">
+            <input type="hidden" th:field="*{firstName}" id="firstName">
+            <div th:if="${name == 'Nandha'}" class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput"
+                       th:field="*{username}" placeholder="name@example.com"> <label
+                    for="floatingInput">Email address</label>
+            </div>
+            <div th:if="${name == 'Nandha'}" class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingPassword"
+                       th:field="*{password}" placeholder="Password"> <label
+                    for="floatingPassword">Password</label>
+            </div>
+            <div class="form-floating mb-3">
+					<textarea title="Enter mails separated by commas" style="height:96px" class="form-control"
+                              id="floatingTo"
+                              th:field="*{to}" placeholder="name@example.com"></textarea> <label
+                    for="floatingTo">To</label>
+            </div>
+            <div class="form-floating mb-3">
+					<textarea title="Enter mails separated by commas" style="height:96px" class="form-control"
+                              id="floatingCC"
+                              th:field="*{cc}" placeholder="name@example.com"></textarea> <label
+                    for="floatingCC">CC</label>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Save">
+        </form>
+    </div>
+</div>
+<th:replace th:replace="~{fragments/scripts}"></th:replace>
+</body>
+</html>
