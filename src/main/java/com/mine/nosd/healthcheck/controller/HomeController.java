@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -84,16 +85,17 @@ public class HomeController {
     }
 
     @PostMapping("/preview")
-    public String postPreview(String htmlContent, String signature, String issues, Model model) {
+    public String postPreview(String htmlContent, String signature, String issues, Model model, RedirectAttributes redirectAttributes) {
         String decodedHtml = URLDecoder.decode(htmlContent, StandardCharsets.UTF_8);
         String decodedSign = URLDecoder.decode(signature, StandardCharsets.UTF_8);
         Configuration configuration = configHandler.getConfig();
         EmailSender.send(configuration.username, configuration.password, configuration.to, configuration.cc, issues, configuration.firstName, decodedHtml, decodedSign);
+        redirectAttributes.addAttribute("success", "true");
         return "redirect:/";
     }
 
     @GetMapping("/")
-    public String checklist(Model model, HttpSession session) {
+    public String checklist(String success, Model model, HttpSession session) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
         if (excelFileHandler.isExcelExists()) {
             Table table = excelFileHandler.readExcelFile();
@@ -103,6 +105,9 @@ public class HomeController {
             session.setMaxInactiveInterval(1800);
             session.setAttribute("rowCount", table.getRowCount());
             session.setAttribute("colCount", table.getColCount());
+            if (success != null) {
+                model.addAttribute("success", "Successfully Submitted!");
+            }
             return "checklist";
         } else {
             return "redirect:/upload-excel";

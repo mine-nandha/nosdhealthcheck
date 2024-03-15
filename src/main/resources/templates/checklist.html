@@ -10,6 +10,9 @@
 </head>
 <body>
 <th:replace th:replace="~{fragments/navbar :: addName(name=${name})}"></th:replace>
+<div th:if="${success}" class="alert alert-success" role="alert">
+    <span th:text="${success}"></span>
+</div>
 <form method="post" enctype="application/x-www-form-urlencoded" accept-charset="UTF-8">
     <div>
         <div class="text-center row">
@@ -68,8 +71,7 @@
     function countYes(){
         document.getElementById("issues").textContent = 'No of Issues : ' + document.querySelectorAll('td[class*="bg-danger"]').length;
     }
-
-
+    document.addEventListener('click',(e)=>{countYes()});
     function applyBgColor(td) {
         td.classList.remove('bg-danger', 'bg-success', 'bg-light'); // Remove existing classes
         let select = td.children[0];

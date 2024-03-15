@@ -109,7 +109,7 @@ public class ExcelFileHandler {
             try (OutputStream outputStream = new FileOutputStream(path.resolve(FILE_NAME).toFile())) {
                 workbook.write(outputStream);
             }
-
+            saveExcelToDb();
         } catch (IOException e) {
             e.printStackTrace();
         }

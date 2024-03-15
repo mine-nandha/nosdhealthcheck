@@ -38,7 +38,7 @@ public class EmailSender {
             message.setFrom(new InternetAddress(nosd));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(cc));
-            message.setSubject("DTV Daily Health Check Report | No of Issues:" + issuesCount + " |  " + date);
+            message.setSubject("DTV Daily Health Check Report | No of Issues: " + issuesCount + " | " + date);
 
             Multipart multipart = new MimeMultipart();
 
