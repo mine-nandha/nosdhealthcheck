@@ -113,7 +113,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         setTimeout(()=>{document.getElementById("issues").textContent = 'No of Issues : ' + document.querySelectorAll('td[style*="background-color: rgb(220, 53, 69)"]').length},100);
-        document.getElementById("date").textContent = new Date().toLocaleDateString();
+        document.getElementById("date").textContent = new Date().toDateString();
         var noDropdownSelects = document.querySelectorAll('td');
         noDropdownSelects.forEach(function(td) {
             applyBgColor(td);

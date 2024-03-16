@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Role</title>
+    <th:replace th:replace="~{fragments/styles}"></th:replace>
+</head>
+<body>
+<th:replace th:replace="~{fragments/navbar :: addName(name=${name})}"></th:replace>
+<h1>Update Role</h1>
+
+<form th:action="@{'./updateroles?name=' + *{name}}" th:object="${roles}" method="post">
+    <label>Name:</label>
+    <input type="text" th:field="*{name}" disabled/>
+    <br/>
+    <label>Role:</label>
+    <input type="text" th:field="*{role}"/>
+    <br/>
+    <button type="submit">Update</button>
+</form>
+<th:replace th:replace="~{fragments/scripts}"></th:replace>
+</body>
+</html>

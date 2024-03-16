@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Roles</title>
+    <th:replace th:replace="~{fragments/styles}"></th:replace>
+</head>
+<body>
+<th:replace th:replace="~{fragments/navbar :: addName(name=${name})}"></th:replace>
+<div th:if="${rolesList.isEmpty()}">
+    <p>No roles found.</p>
+</div>
+<table th:if="${!rolesList.isEmpty()}">
+    <tr>
+        <th>Name</th>
+        <th>Roles</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="role : ${rolesList}">
+        <td th:text="${role.name}"></td>
+        <td th:text="${role.role}"></td>
+        <td>
+            <a th:href="@{'./updateroles?name=' + ${role.name}}">Edit</a>
+            <a th:href="@{'./deleteroles?name=' + ${role.name}}">Delete</a>
+        </td>
+    </tr>
+</table>
+<th:replace th:replace="~{fragments/scripts}"></th:replace>
+</body>
+</html>

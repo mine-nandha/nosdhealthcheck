@@ -1,10 +1,12 @@
 package com.mine.nosd.healthcheck.controller;
 
 import com.mine.nosd.healthcheck.model.Configuration;
+import com.mine.nosd.healthcheck.model.Roles;
 import com.mine.nosd.healthcheck.model.Table;
 import com.mine.nosd.healthcheck.utils.ConfigHandler;
 import com.mine.nosd.healthcheck.utils.EmailSender;
 import com.mine.nosd.healthcheck.utils.ExcelFileHandler;
+import com.mine.nosd.healthcheck.utils.RolesHandler;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +28,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/")
 public class HomeController {
+    RolesHandler rolesHandler;
     Authentication authentication;
     ConfigHandler configHandler;
     ExcelFileHandler excelFileHandler;
@@ -34,14 +37,18 @@ public class HomeController {
     @Value("${MAIL_PASSWORD}")
     String mailPass;
 
-    public HomeController(ConfigHandler configHandler, ExcelFileHandler excelFileHandler) {
+    public HomeController(ConfigHandler configHandler, ExcelFileHandler excelFileHandler, RolesHandler rolesHandler) {
         this.excelFileHandler = excelFileHandler;
         this.configHandler = configHandler;
+        this.rolesHandler = rolesHandler;
     }
 
     @GetMapping("/upload-excel")
     public String getExcel(Model model) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!rolesHandler.findRolesByName(authentication.getName()).getRole().contains("ADMIN")) {
+            return "403";
+        }
         model.addAttribute("name", authentication.getName().split(" ")[0]);
         return "getexcel";
     }
@@ -55,6 +62,9 @@ public class HomeController {
     @GetMapping("/configuration")
     public String getConfiguration(Model model) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!rolesHandler.findRolesByName(authentication.getName()).getRole().contains("ADMIN")) {
+            return "403";
+        }
         model.addAttribute("name", authentication.getName().split(" ")[0]);
         model.addAttribute("config", configHandler.getConfig());
         return "configuration";
@@ -74,6 +84,9 @@ public class HomeController {
     @GetMapping("/preview")
     public String getPreview(HttpSession session, Model model) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!rolesHandler.findRolesByName(authentication.getName()).getRole().contains("ADMIN")) {
+            return "403";
+        }
         Table previewTable = (Table) session.getAttribute("previewTable");
         if (previewTable == null) {
             return "redirect:/";
@@ -97,6 +110,9 @@ public class HomeController {
     @GetMapping("/")
     public String checklist(String success, Model model, HttpSession session) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (rolesHandler.findRolesByName(authentication.getName()) == null) {
+            rolesHandler.updateRole(new Roles(authentication.getName(), "USER"));
+        }
         if (excelFileHandler.isExcelExists()) {
             Table table = excelFileHandler.readExcelFile();
             model.addAttribute("thead", table.thead);
@@ -141,5 +157,4 @@ public class HomeController {
 
         return "redirect:/preview";
     }
-
 }

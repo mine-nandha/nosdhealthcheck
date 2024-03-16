@@ -85,7 +85,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById("date").textContent = new Date().toLocaleDateString();
+        document.getElementById("date").textContent = new Date().toDateString();
         setTimeout(()=>countYes(),100);
 
         var noDropdownSelects = document.querySelectorAll('td:has(select)');

@@ -148,6 +148,7 @@ public class ExcelFileHandler {
         try {
             excel = excelMongoRepository.findById("excel").get();
             excel.setExcel(fileData);
+            excelMongoRepository.save(excel);
         } catch (NoSuchElementException e) {
             excel = new Excel("excel", fileData);
         }
