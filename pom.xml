@@ -17,6 +17,7 @@
     <properties>
         <java.version>17</java.version>
         <spring-cloud-azure.version>5.8.0</spring-cloud-azure.version>
+        <start-class>com.baeldung.demo.DemoApplication</start-class>
     </properties>
     <dependencies>
         <dependency>
@@ -77,6 +78,17 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.mine.nosd.healthcheck.HealthcheckApplication</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -106,5 +118,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
