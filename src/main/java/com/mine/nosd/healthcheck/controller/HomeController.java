@@ -113,6 +113,11 @@ public class HomeController {
         if (rolesHandler.findRolesByName(authentication.getName()) == null) {
             rolesHandler.updateRole(new Roles(authentication.getName(), "USER"));
         }
+        try {
+            excelFileHandler.retrieveExcelFromDb();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (excelFileHandler.isExcelExists()) {
             Table table = excelFileHandler.readExcelFile();
             model.addAttribute("thead", table.thead);
