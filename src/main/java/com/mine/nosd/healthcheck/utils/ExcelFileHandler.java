@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,10 +32,11 @@ public class ExcelFileHandler {
         this.excelMongoRepository = excelMongoRepository;
     }
 
-    public boolean isExcelExists() {
-        if (!Path.of(EXCEL_PATH).resolve(FILE_NAME).toFile().exists()) {
-            retrieveExcelFromDb();
+    public boolean isExcelExists() throws IOException {
+        if (Path.of(EXCEL_PATH).resolve(FILE_NAME).toFile().exists()) {
+            Files.deleteIfExists(Paths.get(Path.of(EXCEL_PATH).resolve(FILE_NAME).toString()));
         }
+        retrieveExcelFromDb();
         return Path.of(EXCEL_PATH).resolve(FILE_NAME).toFile().exists();
     }
 

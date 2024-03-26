@@ -114,25 +114,25 @@ public class HomeController {
             rolesHandler.updateRole(new Roles(authentication.getName(), "USER"));
         }
         try {
-            excelFileHandler.retrieveExcelFromDb();
+            if (excelFileHandler.isExcelExists()) {
+                Table table = excelFileHandler.readExcelFile();
+                model.addAttribute("thead", table.thead);
+                model.addAttribute("tbody", table.tbody);
+                model.addAttribute("name", authentication.getName().split(" ")[0]);
+                session.setMaxInactiveInterval(1800);
+                session.setAttribute("rowCount", table.getRowCount());
+                session.setAttribute("colCount", table.getColCount());
+                if (success != null) {
+                    model.addAttribute("success", "Successfully Submitted!");
+                }
+                return "checklist";
+            } else {
+                return "redirect:/upload-excel";
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (excelFileHandler.isExcelExists()) {
-            Table table = excelFileHandler.readExcelFile();
-            model.addAttribute("thead", table.thead);
-            model.addAttribute("tbody", table.tbody);
-            model.addAttribute("name", authentication.getName().split(" ")[0]);
-            session.setMaxInactiveInterval(1800);
-            session.setAttribute("rowCount", table.getRowCount());
-            session.setAttribute("colCount", table.getColCount());
-            if (success != null) {
-                model.addAttribute("success", "Successfully Submitted!");
-            }
-            return "checklist";
-        } else {
-            return "redirect:/upload-excel";
-        }
+        return "403";
     }
 
     @PostMapping("/")
