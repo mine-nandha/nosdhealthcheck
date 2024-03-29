@@ -84,7 +84,7 @@ public class HomeController {
     @GetMapping("/preview")
     public String getPreview(HttpSession session, Model model) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!rolesHandler.findRolesByName(authentication.getName()).getRole().contains("ADMIN")) {
+        if (!rolesHandler.findRolesByName(authentication.getName()).getRole().contains("USER")) {
             return "403";
         }
         Table previewTable = (Table) session.getAttribute("previewTable");
