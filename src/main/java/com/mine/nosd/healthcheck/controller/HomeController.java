@@ -113,6 +113,9 @@ public class HomeController {
         if (rolesHandler.findRolesByName(authentication.getName()) == null) {
             rolesHandler.updateRole(new Roles(authentication.getName(), "USER"));
         }
+        if (!rolesHandler.findRolesByName(authentication.getName()).getRole().contains("ADMIN")) {
+            model.addAttribute("user", "USER");
+        }
         try {
             if (excelFileHandler.isExcelExists()) {
                 Table table = excelFileHandler.readExcelFile();
