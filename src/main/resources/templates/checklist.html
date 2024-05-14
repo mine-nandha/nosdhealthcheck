@@ -14,7 +14,7 @@
 	<span th:text="${success}"></span>
 </div>
 <form method="post" enctype="application/x-www-form-urlencoded"
-	  accept-charset="UTF-8">
+	  accept-charset="UTF-8" onsubmit="enableTheDisabled()">
 	<div>
 		<div class="text-center row">
 			<div class="col-1"></div>
@@ -88,6 +88,20 @@
         } else {
             td.classList.add('bg-light');
         }
+    }
+
+    const form = document.getElementsByTagName("form");
+
+    
+    function enableTheDisabled() {
+        // Get all select elements with class "form-select"
+        const selects = document.querySelectorAll("select:disabled");
+        if (!selects) return;
+        // Loop through each select element
+        selects.forEach(select => {
+            // Enable the select element before form submission
+            select.disabled = false;
+        });
     }
 
     document.addEventListener('DOMContentLoaded', function() {
